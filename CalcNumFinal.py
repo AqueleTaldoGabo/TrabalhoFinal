@@ -85,6 +85,7 @@ class App(tk.Tk):
         for row in self.tabela.get_children():
             self.tabela.delete(row)
         resultado=''
+        exeecucao = ''
         funcao_str = linhas[0]
         m = int(linhas[1])
         A = []
