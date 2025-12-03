@@ -147,13 +147,13 @@ class App(tk.Tk):
                 resultado = (f"ERRO COMPLETO: {e}")
             try: 
                 if(metodo == 'Gauss-Jacobi'):
-                    x = jacobi(A, B, eps)
+                    x = jacobi(A, B, eps, n)
                     self.criaTabela(x)
             except ValueError as e:
                 resultado = (f"ERRO COMPLETO: {e}")
             try:
                 if(metodo == 'Gauss-Seidel'):
-                    x = seidel(A, B, eps)
+                    x = seidel(A, B, eps, n)
                     self.criaTabela(x)
             except ValueError as e:
                 resultado = (f"ERRO COMPLETO: {e}")
