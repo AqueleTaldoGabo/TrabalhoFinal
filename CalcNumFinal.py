@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 import numpy as np
+import time
 import math
 
 def lerArquivo(arquivo):
@@ -102,19 +103,22 @@ class App(tk.Tk):
         n = int(linhas[start+3])
         phi_str = linhas[start+4]
         derivada = linhas[start+5]
+        eps = float(linhas[start+6])
         x0Secante = 1
         x1Secante = 2
         x0 = 1.5
-        eps = 0.05
+        
 
         ponto_teste = (a + b) / 2
         resultado_teste = Funcao(ponto_teste, funcao_str)
         metodo = self.opcao_var.get()
+    
         if A.shape[0] != A.shape[1]:
             resultado = "ERRO: MATRIZ NAO QUADRADA"
         elif A.shape[0] != B.shape[0]:
             resultado = "ERRO: MATRIZ B DE TAMANHO DIFERENTE"
         else:
+            start_time = time.time()
             try:
                 if(metodo == 'Eliminação de gauss(sem pivoteamento)'):
                     resultado = resolver_sistema_gauss(A.copy(), B.copy(), 'sem')
@@ -182,8 +186,12 @@ class App(tk.Tk):
                     self.criaTabela(x['resultados'])
             except ValueError as e:
                 resultado = (f"ERRO COMPLETO: {e}")
+            end_time = time.time()  
+            tempo_execucao = end_time - start_time
+            exeecucao = f'\nTempo decorrido(ms): {tempo_execucao}'
+            
         
-        self.resposta_var.set(resultado)
+        self.resposta_var.set(str(resultado) + exeecucao)
     def criaTabela(self, lista):
 
         if isinstance(lista[0], dict):
