@@ -336,7 +336,7 @@ def multiplicacaoMatriz(matriz1, matriz2):
     return np.dot(matriz1, matriz2)
 
 def verificarIgualdade(matrizResultado, matrizComparacao):
-    return np.array_equal(matrizResultado, matrizComparacao)
+    return matrizComparacao.all() == matrizResultado.all()
 
 def calcularMatrizColuna(matriz1, matriz2):
 
@@ -355,7 +355,6 @@ def cholensky(A, b):
                 G = calcularTriangularInferior(A)
                 G_T = transposta(G)
                 resultado = multiplicacaoMatriz(G, G_T)
-
                 if verificarIgualdade(resultado, A):
                     matriz_Y = calcularMatrizColuna(G, b)
 
