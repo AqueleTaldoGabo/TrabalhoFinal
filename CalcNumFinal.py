@@ -83,6 +83,7 @@ class App(tk.Tk):
         linhas = lerArquivo("variaveis.txt")
         for row in self.tabela.get_children():
             self.tabela.delete(row)
+        resultado=''
         funcao_str = linhas[0]
         m = int(linhas[1])
         A = []
@@ -139,34 +140,48 @@ class App(tk.Tk):
                     resultado = resolver_sistema_com_pivoteamento(A, B)
             except ValueError as e:
                 resultado = (f"ERRO COMPLETO: {e}")
-            if(metodo == 'Gauss-Jacobi'):
-                resultado = ''
-                x = jacobi(A, B, eps)
-                self.criaTabela(x)
-            if(metodo == 'Gauss-Seidel'):
-                resultado = ''
-                x = seidel(A, B, eps)
-                self.criaTabela(x)
-            if(metodo == 'Bisseccao'):
-                resultado = ''
-                x = Bisseccao(funcao_str, a, b, delta, n)
-                self.criaTabela(x['resultados'])
-            if(metodo == 'MIL'):
-                resultado = ''
-                x = MIL(funcao_str, phi_str, x0, delta, n)
-                self.criaTabela(x['resultados'])
-            if(metodo == 'Newton'):
-                resultado = ''
-                x = Newton(funcao_str, derivada, x0, delta, n)
-                self.criaTabela(x['resultados'])
-            if(metodo == 'Secante'):
-                resultado = ''
-                x = Secante(funcao_str, x0Secante, x1Secante, delta, n)
-                self.criaTabela(x['resultados'])
-            if(metodo == 'Regula-falsi'):
-                resultado = ''
-                x = RegulaFalsi(funcao_str, a, b, delta, delta, n)
-                self.criaTabela(x['resultados'])
+            try: 
+                if(metodo == 'Gauss-Jacobi'):
+                    x = jacobi(A, B, eps)
+                    self.criaTabela(x)
+            except ValueError as e:
+                resultado = (f"ERRO COMPLETO: {e}")
+            try:
+                if(metodo == 'Gauss-Seidel'):
+                    x = seidel(A, B, eps)
+                    self.criaTabela(x)
+            except ValueError as e:
+                resultado = (f"ERRO COMPLETO: {e}")
+            try: 
+                if(metodo == 'Bisseccao'):
+                    x = Bisseccao(funcao_str, a, b, delta, n)
+                    self.criaTabela(x['resultados'])
+            except ValueError as e:
+                resultado = (f"ERRO COMPLETO: {e}")
+            try: 
+                if(metodo == 'MIL'):
+                    x = MIL(funcao_str, phi_str, x0, delta, n)
+                    self.criaTabela(x['resultados'])
+            except ValueError as e:
+                resultado = (f"ERRO COMPLETO: {e}")
+            try:
+                if(metodo == 'Newton'):
+                    x = Newton(funcao_str, derivada, x0, delta, n)
+                    self.criaTabela(x['resultados'])
+            except ValueError as e:
+                resultado = (f"ERRO COMPLETO: {e}")
+            try: 
+                if(metodo == 'Secante'):
+                    x = Secante(funcao_str, x0Secante, x1Secante, delta, n)
+                    self.criaTabela(x['resultados'])
+            except ValueError as e:
+                resultado = (f"ERRO COMPLETO: {e}")
+            try:
+                if(metodo == 'Regula-falsi'):
+                    x = RegulaFalsi(funcao_str, a, b, delta, delta, n)
+                    self.criaTabela(x['resultados'])
+            except ValueError as e:
+                resultado = (f"ERRO COMPLETO: {e}")
         
         self.resposta_var.set(resultado)
     def criaTabela(self, lista):
@@ -434,7 +449,7 @@ def seidel(A, b, epsilon, iterMax=50):
             return lista
 
         v = x[:]
-    print("Erro: Número máximo de iterações atingido")
+    raise ValueError("Erro: Número máximo de iterações atingido")
     return x
 def substituicoes_sucessivas(L, b):
     n = len(L)
@@ -509,7 +524,7 @@ def resolver_sistema_com_pivoteamento(A, b):
 
 
     x = substituicoes_retroativas(U, y)
-
+    x = np.array(x).reshape(-1, 1)
     return x
 
 
